@@ -1,1 +1,181 @@
-hey
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<style>
+		body{
+			min-width:100vh;
+			background:thistle;
+		}
+		nav{
+			position:relative;
+		}
+		.hey > li >a{
+			color:yellow;
+			text-decoration: none;
+			font-size:20px;
+			background: rgba(0,0,0,0.2);
+			padding:10px 30px;
+			display: inline-block;
+			margin:20px;
+			border-radius: 2px;
+		}
+		nav ul{
+			list-style: none;
+			margin:0;
+			padding:0;
+			display: flex;
+			justify-content: center;
+		}
+		.hey li {
+			position: relative;
+			display: flex;
+			justify-content: center;
+		} 
+		.dropdown{
+			opacity: 0;
+			position: absolute;
+			overflow: hidden;
+			padding:20px;
+			top:-30px;
+			transition: all 0.5s;
+			transform: translateY(100px);
+			will-change: transform;
+			display: none;
+}
+.trigger-enter .dropdown{
+	display: block;
+}
+.trigger-enter-active .dropdown{
+	opacity: 1;
+}
+
+	.dropdownBackground{
+		height:100px;
+		width:100px;
+		opacity: 0;
+		position: absolute;
+         background:white;
+			transition: all 0.5s, opacity 0.1s, translate 0.2s;
+			transform-origin:50% 0%;
+			will-change: transform;
+			display: flex;
+			justify-content: center;
+}
+
+.dropdownBackground.open{
+	opacity: 1;
+
+}
+.arrow{
+	position: absolute;
+	width:20px;
+	height: 20px;
+	display: block;
+	background: white;
+	transform: translateY(-50%) rotate(45deg);
+}
+.bio{
+	min-width: 500px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	line-height:1.7;
+}
+.bio img{
+	float:left;
+	margin-right:100px;
+}
+.courses{
+	min-width: 300px;
+}
+.courses li{
+	padding : 10px 0;
+	display: block;
+	border-bottom:1px solid rgba(0,0,0,0.2);
+}
+.dropdown a{
+	text-decoration: none;
+	color:#ffc600;
+}
+a.button{
+	background: black;
+	display: block;
+	padding:10px;
+	color:white;
+	margin-bottom:10px;
+}
+
+	</style>
+</head>
+<body>
+	<nav class ="top">
+	<div class = "dropdownBackground">
+		<span class = "arrow"></span>
+	</div>
+	<ul class = "hey">
+		<li>
+			<a href="#">About us</a>
+			<div class = " dropdown dropdown1">
+				<div class = "bio">
+					<img src ="https://logo.clearbit.com/wesbos.com">
+					<p>Wesbos sure love web devolpment.I'm 33 years old and I've been making websites for about 21 years - or exactly 675591672861 milliseconds! I create online courses and run a web development podcast called Syntax.I  teach things like javascript,css and html.I'm a web developer, teacher and speaker from Hamilton, Ontario 🇨🇦.
+					</p>
+				</div>
+			</div>
+		</li>
+		<li>
+			<a href="#">course</a>
+			<ul class = " dropdown courses">
+				<li> <span class = "code">RFB</span>
+					<a href="https://ReactForBeginners.com">react for beginners</a></li>
+					<li> <span class = "code">JS30</span>
+					<a href="https://javascript30.com/">javasript 30</a></li>
+					<li> <span class = "code">WTF</span>
+					<a href="https://flexbox.io">what the flexbox</a></li>
+				</ul>
+			</li>
+				<li>
+					<a href ="#">other links</a>
+					<ul class = "dropdown dropdown3">
+						<li><a class ="button" href ="http://twitter.com">twitter</a></li>
+                        <li><a class ="button" href ="http://facebook.com">facebook</a></li>
+                        <li><a class ="button" href ="http://wesbos.com">blog</a></li>
+                    </ul>
+                </li>
+          </ul>
+      </nav>
+      <script>
+      	const triggers = document.querySelectorAll('.hey >li');
+      	const  background= document.querySelector('.dropdownBackground');
+      	const nav = document.querySelector('.top');
+
+      	function handleEnter(){
+      		this.classList.add('trigger-enter');
+      		setTimeout(()=> this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'),150);
+      		background.classList.add('open');
+
+      		const  dropdown= this.querySelector('.dropdown');
+      		const  dropdownCoords= dropdown.getBoundingClientRect();
+            const  navCoords= nav.getBoundingClientRect();
+
+              const coords = {
+             	height: dropdownCoords.height,
+                width: dropdownCoords.width,
+                top:dropdownCoords.top-navCoords.top,
+                left:dropdownCoords.left-navCoords.left,
+             };
+
+             background.style.setProperty('width' ,`${coords.width}px`);
+             background.style.setProperty('height' ,`${coords.height}px`);
+             background.style.setProperty('transform' ,`translate(${coords.left}px, ${coords.top}px)`);
+      	}
+      	function handleLeave(){
+      		this.classList.remove('trigger-enter' , 'trigger-enter-active');
+      		background.classList.remove('open');
+      	}
+      	triggers.forEach(trigger => trigger.addEventListener('mouseenter',handleEnter));
+      		triggers.forEach(trigger => trigger.addEventListener('mouseleave',handleLeave));
+      	</script>
+  </body>
+</html>
